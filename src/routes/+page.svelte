@@ -77,23 +77,22 @@
 	/>
 </svelte:head>
 
-<div class="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50">
+<div class="min-h-screen bg-gray-50">
 	<!-- Header -->
-	<header class="border-b bg-white/80 backdrop-blur-sm sticky top-0 z-50 shadow-sm">
-		<div class="container mx-auto px-4 py-6">
+	<header class="border-b bg-white sticky top-0 z-50">
+		<div class="container mx-auto px-4 py-4">
 			<div class="flex items-center justify-between">
 				<div>
-					<h1 class="text-3xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+					<h1 class="text-2xl font-bold text-gray-900">
 						BrandIcon
 					</h1>
-					<p class="text-gray-600 text-sm mt-1">Chrome Extension Icon Generator</p>
 				</div>
 				<div class="flex gap-2">
 					<a
 						href="https://developer.chrome.com/docs/extensions/mv3/manifest/icons/"
 						target="_blank"
 						rel="noopener noreferrer"
-						class="text-sm text-blue-600 hover:text-blue-700 underline"
+						class="text-sm text-gray-600 hover:text-gray-900"
 					>
 						Chrome Icon Guide
 					</a>
@@ -107,37 +106,37 @@
 			<!-- Left Panel - Input -->
 			<div class="lg:col-span-2 space-y-6">
 				<!-- Mode Selector -->
+				<div class="bg-white border-b mb-6 -mx-4 px-4">
+					<div class="flex gap-2 overflow-x-auto py-3">
+						<button
+							onclick={() => (currentMode = 'upload')}
+							class="px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap transition-colors {currentMode === 'upload'
+								? 'bg-gray-900 text-white'
+								: 'bg-gray-100 text-gray-700 hover:bg-gray-200'}"
+						>
+							Upload Image
+						</button>
+						<button
+							onclick={() => (currentMode = 'template')}
+							class="px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap transition-colors {currentMode === 'template'
+								? 'bg-gray-900 text-white'
+								: 'bg-gray-100 text-gray-700 hover:bg-gray-200'}"
+						>
+							Templates
+						</button>
+						<button
+							onclick={() => (currentMode = 'editor')}
+							class="px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap transition-colors {currentMode === 'editor'
+								? 'bg-gray-900 text-white'
+								: 'bg-gray-100 text-gray-700 hover:bg-gray-200'}"
+						>
+							Canvas Editor
+						</button>
+					</div>
+				</div>
+
 				<Card class="p-6">
 					{#snippet children()}
-						<div class="flex gap-3 mb-6">
-							<Button
-								variant={currentMode === 'upload' ? 'default' : 'outline'}
-								onclick={() => (currentMode = 'upload')}
-							>
-								{#snippet children()}
-									<Image class="w-4 h-4 mr-2" />
-									Upload Image
-								{/snippet}
-							</Button>
-							<Button
-								variant={currentMode === 'template' ? 'default' : 'outline'}
-								onclick={() => (currentMode = 'template')}
-							>
-								{#snippet children()}
-									<Palette class="w-4 h-4 mr-2" />
-									Templates
-								{/snippet}
-							</Button>
-							<Button
-								variant={currentMode === 'editor' ? 'default' : 'outline'}
-								onclick={() => (currentMode = 'editor')}
-							>
-								{#snippet children()}
-									<Edit class="w-4 h-4 mr-2" />
-									Canvas Editor
-								{/snippet}
-							</Button>
-						</div>
 
 						<!-- Content based on mode -->
 						{#if currentMode === 'upload'}
@@ -156,7 +155,7 @@
 						<div class="flex items-center justify-between mb-6">
 							<h2 class="text-xl font-semibold text-gray-900">Generated Icons</h2>
 							{#if isGenerating}
-								<span class="text-sm text-blue-600 animate-pulse">Generating...</span>
+								<span class="text-sm text-gray-600 animate-pulse">Generating...</span>
 							{/if}
 						</div>
 						<IconPreview icons={generatedIcons} />
@@ -229,9 +228,9 @@
 						{/if}
 
 						<!-- Info Card -->
-						<div class="mt-6 p-4 bg-blue-50 rounded-lg border border-blue-200">
-							<h3 class="text-sm font-semibold text-blue-900 mb-2">Icon Sizes Info</h3>
-							<ul class="text-xs text-blue-800 space-y-1">
+						<div class="mt-6 p-4 bg-gray-50 rounded-lg border border-gray-200">
+							<h3 class="text-sm font-semibold text-gray-900 mb-2">Icon Sizes Info</h3>
+							<ul class="text-xs text-gray-700 space-y-1">
 								<li>• <strong>16×16:</strong> Browser toolbar</li>
 								<li>• <strong>32×32:</strong> Retina displays</li>
 								<li>• <strong>48×48:</strong> Extensions page</li>
@@ -246,8 +245,8 @@
 		<!-- Features Section -->
 		<div class="mt-16 grid md:grid-cols-3 gap-8">
 			<div class="text-center">
-				<div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mx-auto mb-4">
-					<Image class="w-6 h-6 text-blue-600" />
+				<div class="w-12 h-12 bg-gray-100 rounded-lg flex items-center justify-center mx-auto mb-4">
+					<Image class="w-6 h-6 text-gray-700" />
 				</div>
 				<h3 class="font-semibold text-gray-900 mb-2">Upload & Resize</h3>
 				<p class="text-sm text-gray-600">
@@ -255,8 +254,8 @@
 				</p>
 			</div>
 			<div class="text-center">
-				<div class="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mx-auto mb-4">
-					<Palette class="w-6 h-6 text-purple-600" />
+				<div class="w-12 h-12 bg-gray-100 rounded-lg flex items-center justify-center mx-auto mb-4">
+					<Palette class="w-6 h-6 text-gray-700" />
 				</div>
 				<h3 class="font-semibold text-gray-900 mb-2">Professional Templates</h3>
 				<p class="text-sm text-gray-600">
@@ -264,8 +263,8 @@
 				</p>
 			</div>
 			<div class="text-center">
-				<div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mx-auto mb-4">
-					<Edit class="w-6 h-6 text-green-600" />
+				<div class="w-12 h-12 bg-gray-100 rounded-lg flex items-center justify-center mx-auto mb-4">
+					<Edit class="w-6 h-6 text-gray-700" />
 				</div>
 				<h3 class="font-semibold text-gray-900 mb-2">Canvas Editor</h3>
 				<p class="text-sm text-gray-600">
@@ -276,12 +275,12 @@
 	</main>
 
 	<!-- Footer -->
-	<footer class="border-t bg-white/80 backdrop-blur-sm mt-20">
+	<footer class="border-t bg-white mt-20">
 		<div class="container mx-auto px-4 py-8 text-center text-sm text-gray-600">
 			<p>
-				Built with <a href="https://kit.svelte.dev" class="text-blue-600 hover:underline">SvelteKit</a>
+				Built with <a href="https://kit.svelte.dev" class="text-gray-700 hover:text-gray-900">SvelteKit</a>
 				| Open Source on
-				<a href="https://github.com/dathims/brandicon" class="text-blue-600 hover:underline">GitHub</a>
+				<a href="https://github.com/dathims/brandicon" class="text-gray-700 hover:text-gray-900">GitHub</a>
 			</p>
 		</div>
 	</footer>

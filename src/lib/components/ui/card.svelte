@@ -9,7 +9,7 @@
 	let { class: className, children }: CardProps = $props();
 </script>
 
-<div class={cn('rounded-lg border bg-white shadow-sm', className)}>
+<div class={cn('rounded-lg border border-gray-200 bg-white', className)}>
 	{#if children}
 		{@render children()}
 	{/if}
