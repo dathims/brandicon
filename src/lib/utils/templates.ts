@@ -31,6 +31,7 @@ export const templates: IconTemplate[] = [
 		category: 'tech',
 		description: 'Modern gradient circle design',
 		render: (size: number, customColor = '#3b82f6') => {
+			if (typeof window === 'undefined') throw new Error('Browser only');
 			const canvas = document.createElement('canvas');
 			canvas.width = size;
 			canvas.height = size;
@@ -60,6 +61,7 @@ export const templates: IconTemplate[] = [
 		category: 'business',
 		description: 'Clean rounded square with shadow',
 		render: (size: number, customColor = '#10b981') => {
+			if (typeof window === 'undefined') throw new Error('Browser only');
 			const canvas = document.createElement('canvas');
 			canvas.width = size;
 			canvas.height = size;
@@ -88,6 +90,7 @@ export const templates: IconTemplate[] = [
 		category: 'business',
 		description: 'First letter on colored background',
 		render: (size: number, customColor = '#f59e0b') => {
+			if (typeof window === 'undefined') throw new Error('Browser only');
 			const canvas = document.createElement('canvas');
 			canvas.width = size;
 			canvas.height = size;
@@ -113,6 +116,7 @@ export const templates: IconTemplate[] = [
 		category: 'creative',
 		description: 'Split diagonal design',
 		render: (size: number, customColor = '#ec4899') => {
+			if (typeof window === 'undefined') throw new Error('Browser only');
 			const canvas = document.createElement('canvas');
 			canvas.width = size;
 			canvas.height = size;
@@ -145,6 +149,7 @@ export const templates: IconTemplate[] = [
 		category: 'creative',
 		description: 'Abstract geometric pattern',
 		render: (size: number, customColor = '#06b6d4') => {
+			if (typeof window === 'undefined') throw new Error('Browser only');
 			const canvas = document.createElement('canvas');
 			canvas.width = size;
 			canvas.height = size;
@@ -182,6 +187,7 @@ export const templates: IconTemplate[] = [
 		category: 'tools',
 		description: 'Simple centered icon shape',
 		render: (size: number, customColor = '#6366f1') => {
+			if (typeof window === 'undefined') throw new Error('Browser only');
 			const canvas = document.createElement('canvas');
 			canvas.width = size;
 			canvas.height = size;
@@ -213,6 +219,7 @@ export const templates: IconTemplate[] = [
 		category: 'gaming',
 		description: 'Glowing neon effect',
 		render: (size: number, customColor = '#a855f7') => {
+			if (typeof window === 'undefined') throw new Error('Browser only');
 			const canvas = document.createElement('canvas');
 			canvas.width = size;
 			canvas.height = size;
@@ -241,6 +248,7 @@ export const templates: IconTemplate[] = [
 		category: 'tech',
 		description: 'iOS-style rounded square',
 		render: (size: number, customColor = '#3b82f6') => {
+			if (typeof window === 'undefined') throw new Error('Browser only');
 			const canvas = document.createElement('canvas');
 			canvas.width = size;
 			canvas.height = size;

@@ -11,6 +11,11 @@ export async function resizeImage(
 	imageUrl: string,
 	targetSize: number
 ): Promise<Blob> {
+	// Browser-only check
+	if (typeof window === 'undefined') {
+		throw new Error('resizeImage can only be called in the browser');
+	}
+
 	return new Promise((resolve, reject) => {
 		const img = new Image();
 		img.crossOrigin = 'anonymous';
@@ -82,6 +87,11 @@ export async function generateAllIconSizes(sourceImage: string): Promise<{
  * Convert a File to a data URL
  */
 export function fileToDataUrl(file: File): Promise<string> {
+	// Browser-only check
+	if (typeof window === 'undefined') {
+		throw new Error('fileToDataUrl can only be called in the browser');
+	}
+
 	return new Promise((resolve, reject) => {
 		const reader = new FileReader();
 		reader.onload = () => resolve(reader.result as string);
@@ -97,6 +107,11 @@ export function createBlankCanvas(
 	size: number,
 	backgroundColor = '#ffffff'
 ): HTMLCanvasElement {
+	// Browser-only check
+	if (typeof window === 'undefined') {
+		throw new Error('createBlankCanvas can only be called in the browser');
+	}
+
 	const canvas = document.createElement('canvas');
 	canvas.width = size;
 	canvas.height = size;
@@ -114,6 +129,11 @@ export function createBlankCanvas(
  * Download a blob as a file
  */
 export function downloadBlob(blob: Blob, filename: string) {
+	// Browser-only check
+	if (typeof window === 'undefined') {
+		throw new Error('downloadBlob can only be called in the browser');
+	}
+
 	const url = URL.createObjectURL(blob);
 	const a = document.createElement('a');
 	a.href = url;

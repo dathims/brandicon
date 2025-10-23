@@ -1,18 +1,50 @@
 <script lang="ts">
-	import ImageUploader from '$lib/components/ImageUploader.svelte';
-	import IconPreview from '$lib/components/IconPreview.svelte';
-	import TemplateGallery from '$lib/components/TemplateGallery.svelte';
-	import CanvasEditor from '$lib/components/CanvasEditor.svelte';
+	import { onMount } from 'svelte';
 	import Button from '$lib/components/ui/button.svelte';
 	import Card from '$lib/components/ui/card.svelte';
-	import {
-		generateAllIconSizes,
-		type IconSize,
-		CHROME_ICON_SIZES
-	} from '$lib/utils/image-processor';
-	import { exportAsZip, exportIndividualIcons, generateManifestSnippet } from '$lib/utils/export';
+	import type { IconSize } from '$lib/utils/image-processor';
 	import type { IconTemplate } from '$lib/utils/templates';
 	import { Download, Code2, Image, Palette, Edit } from 'lucide-svelte';
+
+	// Dynamic imports for browser-only components
+	let ImageUploader: any;
+	let IconPreview: any;
+	let TemplateGallery: any;
+	let CanvasEditor: any;
+	let generateAllIconSizes: any;
+	let exportAsZip: any;
+	let exportIndividualIcons: any;
+	let generateManifestSnippet: any;
+	let componentsLoaded = $state(false);
+
+	onMount(async () => {
+		// Import components and utils only in the browser
+		const [
+			imageUploaderModule,
+			iconPreviewModule,
+			templateGalleryModule,
+			canvasEditorModule,
+			imageProcessorModule,
+			exportModule
+		] = await Promise.all([
+			import('$lib/components/ImageUploader.svelte'),
+			import('$lib/components/IconPreview.svelte'),
+			import('$lib/components/TemplateGallery.svelte'),
+			import('$lib/components/CanvasEditor.svelte'),
+			import('$lib/utils/image-processor'),
+			import('$lib/utils/export')
+		]);
+
+		ImageUploader = imageUploaderModule.default;
+		IconPreview = iconPreviewModule.default;
+		TemplateGallery = templateGalleryModule.default;
+		CanvasEditor = canvasEditorModule.default;
+		generateAllIconSizes = imageProcessorModule.generateAllIconSizes;
+		exportAsZip = exportModule.exportAsZip;
+		exportIndividualIcons = exportModule.exportIndividualIcons;
+		generateManifestSnippet = exportModule.generateManifestSnippet;
+		componentsLoaded = true;
+	});
 
 	let currentMode = $state<'upload' | 'template' | 'editor'>('upload');
 	let sourceImage = $state<string | null>(null);
@@ -66,7 +98,7 @@
 		showManifest = !showManifest;
 	}
 
-	const manifestSnippet = $derived(generateManifestSnippet());
+	const manifestSnippet = $derived(generateManifestSnippet ? generateManifestSnippet() : '');
 </script>
 
 <svelte:head>
@@ -137,14 +169,17 @@
 
 				<Card class="p-6">
 					{#snippet children()}
-
-						<!-- Content based on mode -->
-						{#if currentMode === 'upload'}
-							<ImageUploader onImageLoaded={handleImageUploaded} />
-						{:else if currentMode === 'template'}
-							<TemplateGallery onTemplateSelect={handleTemplateSelected} />
-						{:else if currentMode === 'editor'}
-							<CanvasEditor initialImage={sourceImage} onSave={handleEditorSave} />
+						{#if componentsLoaded}
+							<!-- Content based on mode -->
+							{#if currentMode === 'upload'}
+								<svelte:component this={ImageUploader} onImageLoaded={handleImageUploaded} />
+							{:else if currentMode === 'template'}
+								<svelte:component this={TemplateGallery} onTemplateSelect={handleTemplateSelected} />
+							{:else if currentMode === 'editor'}
+								<svelte:component this={CanvasEditor} initialImage={sourceImage} onSave={handleEditorSave} />
+							{/if}
+						{:else}
+							<p class="text-gray-500 text-center py-8">Loading...</p>
 						{/if}
 					{/snippet}
 				</Card>
@@ -158,7 +193,9 @@
 								<span class="text-sm text-gray-600 animate-pulse">Generating...</span>
 							{/if}
 						</div>
-						<IconPreview icons={generatedIcons} />
+						{#if componentsLoaded}
+							<svelte:component this={IconPreview} icons={generatedIcons} />
+						{/if}
 					{/snippet}
 				</Card>
 			</div>
